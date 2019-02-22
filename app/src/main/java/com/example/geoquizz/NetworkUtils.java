@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 
 public class NetworkUtils {
     private static final String LOG_TAG =
@@ -42,7 +43,10 @@ public class NetworkUtils {
                     .appendQueryParameter(GEOMETRY_PARAM, "centre")
                     .build();
 
-            URL requestURL = new URL(builtURI.toString());
+            //URL requestURL = new URL(builtURI.toString());
+            URL requestURL = new URL(URLDecoder.decode(builtURI.toString(), "UTF-8"));
+
+            Log.d(LOG_TAG,requestURL.toString());
 
             urlConnection = (HttpURLConnection) requestURL.openConnection();
             urlConnection.setRequestMethod("GET");
