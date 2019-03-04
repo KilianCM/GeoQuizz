@@ -119,7 +119,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     mCity.setCode(city.getString("code"));
                     mCity.setCodeDepartment(city.getString("codeDepartement"));
                     mCity.setCodeRegion(city.getString("codeRegion"));
-                    mCity.setSurface(city.getDouble("surface"));
+                    mCity.setSurface(city.getDouble("surface")/100);
                     mCity.setPopulation(city.getString("population"));
                     mCity.setRegion(city.getJSONObject("region"));
                     mCity.setDepartment(city.getJSONObject("departement"));
