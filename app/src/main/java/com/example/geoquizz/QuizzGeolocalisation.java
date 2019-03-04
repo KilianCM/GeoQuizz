@@ -28,7 +28,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
         setContentView(R.layout.quizz_geolocalisation);
 
         //mTitleText = findViewById(R.id.titleText);
-        mNameText = findViewById(R.id.city_name);
+        mNameText = findViewById(R.id.text_city);
 
         if (getSupportLoaderManager().getLoader(0) != null) {
             getSupportLoaderManager().initLoader(0, null, this);
