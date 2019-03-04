@@ -29,7 +29,7 @@ public class NetworkUtils {
     private static final String GEOMETRY_PARAM = "geometry";
 
 
-    static String getCityInfoWithLocalisation(Float longitude, Float latitude){
+    static String getCityInfoWithLocalisation(Double longitude, Double latitude){
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         String cityJSONString = null;
