@@ -7,11 +7,11 @@ import android.support.v4.content.AsyncTaskLoader;
 
 public class CityLoader extends AsyncTaskLoader<String> {
 
-    private Float mLongitude;
-    private Float mLatitude;
+    private Double mLongitude;
+    private Double mLatitude;
 
 
-    CityLoader(Context context, Float longitude, Float latitude) {
+    CityLoader(Context context, Double longitude, Double latitude) {
         super(context);
         mLatitude = latitude;
         mLongitude = longitude;

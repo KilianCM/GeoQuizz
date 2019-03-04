@@ -1,26 +1,61 @@
 package com.example.geoquizz;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class QuizzGeolocalisation extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<String> {
+        implements LoaderManager.LoaderCallbacks<String>, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private TextView mNameText;
     private City mCity = new City();
+
+    private static final String LOG_TAG =
+            QuizzGeolocalisation.class.getSimpleName();
+
+    //Identifiant de la demande de permission
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    //Si l'utilisateur à autoriser la localisation ou non
+    private Boolean mLocationPermissionGranted = false;
+    //Dernière position détéctée
+    private Location mLastKnowLocation;
+    //Permet de récuperer la position
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+
+    private Double mLongitude;
+    private Double mLatitude;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +69,12 @@ public class QuizzGeolocalisation extends AppCompatActivity
             getSupportLoaderManager().initLoader(0, null, this);
         }
 
-        // TO DO : Get the coordinates.
-        Float latitude = 45f;
-        Float longitude = 6f;
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        this.getLocationPermission();
+        this.getDeviceLocation();
+    }
 
-
+    public void callApi(Double latitude, Double longitude){
         // Check the status of the network connection.
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -53,34 +89,29 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 && latitude != null && longitude != null) {
 
             Bundle queryBundle = new Bundle();
-            queryBundle.putFloat("longitude", longitude);
-            queryBundle.putFloat("latitude", latitude);
+            queryBundle.putDouble("longitude", mLongitude);
+            queryBundle.putDouble("latitude", mLatitude);
             getSupportLoaderManager().restartLoader(0, queryBundle, this);
 
-            /*mAuthorText.setText("");
-            mTitleText.setText(R.string.loading);*/
         }
 
         else {
-            if (longitude == null || latitude == null) {
-                //TO DO : Popup d'erreur
-            } else {
+            if (latitude == null || longitude == null) {
+                Log.d(LOG_TAG,"Valeurs nulles");
 
             }
         }
-
-
     }
 
 
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
-        Float longitude = null;
-        Float latitude = null;
+        Double longitude = null;
+        Double latitude = null;
 
         if (args != null) {
-            longitude = args.getFloat("longitude");
-            latitude = args.getFloat("latitude");
+            longitude = args.getDouble("longitude");
+            latitude = args.getDouble("latitude");
         }
 
         return new CityLoader(this, longitude,latitude);
@@ -153,6 +184,66 @@ public class QuizzGeolocalisation extends AppCompatActivity
     @Override
     public void onLoaderReset(@NonNull Loader<String> loader) {
 
+    }
+
+    //On reçoit la réponse de l'utilisateur ici
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+    }
+
+    //On demande la permission ici
+    protected void getLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    private void getDeviceLocation() {
+        try {
+            //On Check toujours si on a le droit, sinon ca plante.
+            if(mLocationPermissionGranted){
+                //On demande à notre service de localisation de trouver la position actuelle
+                @SuppressLint("MissingPermission") Task locationResult = mFusedLocationProviderClient.getLastLocation();
+                //Puisque c'est de l'asynchrone. On ajoute un écouteur qui nous préviens quand la detection est finie.
+                //On ne sait jamais si le GPS marche, si il est lent #wiko, le temps de match des satellites.
+                // De plus la position peut-etre déduite par pléthore de systèmes : Wifi, Bluetooth, Antenne LTE, etc.)
+                locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        //Une fois la detection effectuée, on vérifie que tout est OK
+                        if(task.isSuccessful()){
+                            //Si oui on attribue la dernière localisation à notre variable pour la garder dans un coin.
+                            mLastKnowLocation = (Location) task.getResult();
+                            mLongitude = mLastKnowLocation.getLongitude();
+                            mLatitude = mLastKnowLocation.getLatitude();
+                            callApi(mLatitude, mLongitude);
+                        }else {
+                            //Traitement du cas où on ne trouve pas de position.
+                            Log.d("TAG", "Current location is null. Using defaults.");
+                            Log.e("TAG", "Exception: %s", task.getException());
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e){
+            Log.e("TAG", e.getMessage());
+        }
     }
 
 }
