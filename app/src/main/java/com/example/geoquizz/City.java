@@ -9,19 +9,15 @@ public class City {
     private String code;
     private ArrayList<String> codes;
     private Double surface;
-    private String codeDepartment;
-    private String codeRegion;
     private String population;
-    private JSONObject department;
-    private JSONObject region;
+    private Department department;
+    private Region region;
 
-    public City(String name, String code, ArrayList<String> codes, Double surface, String codeDepartment, String codeRegion, String population, JSONObject department, JSONObject region) {
+    public City(String name, String code, ArrayList<String> codes, Double surface, String population, Department department, Region region) {
         this.name = name;
         this.code = code;
         this.codes = codes;
         this.surface = surface;
-        this.codeDepartment = codeDepartment;
-        this.codeRegion = codeRegion;
         this.population = population;
         this.department = department;
         this.region = region;
@@ -46,22 +42,20 @@ public class City {
     }
 
     public String getCodeDepartment() {
-        return codeDepartment;
+        return this.department.getCode();
     }
 
-    public String getCodeRegion() {
-        return codeRegion;
-    }
+    public String getCodeRegion() { return this.region.getCode(); }
 
     public String getPopulation() {
         return population;
     }
 
-    public JSONObject getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public JSONObject getRegion() {
+    public Region getRegion() {
         return region;
     }
 
@@ -81,23 +75,15 @@ public class City {
         this.surface = surface;
     }
 
-    public void setCodeDepartment(String codeDepartment) {
-        this.codeDepartment = codeDepartment;
-    }
-
-    public void setCodeRegion(String codeRegion) {
-        this.codeRegion = codeRegion;
-    }
-
     public void setPopulation(String population) {
         this.population = population;
     }
 
-    public void setDepartment(JSONObject department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
-    public void setRegion(JSONObject region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 }

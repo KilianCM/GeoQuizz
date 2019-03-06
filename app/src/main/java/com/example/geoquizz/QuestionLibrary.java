@@ -5,10 +5,8 @@ import org.json.JSONObject;
 import java.util.Random;
 
 public class QuestionLibrary {
-    //private String region = QuizzGeolocalisation.mCity.getRegion();
-    //private String department = QuizzGeolocalisation.mCity.getDepartment();
-    private String region = "AURA";
-    private String department = "Yaute";
+    private String region = QuizzGeolocalisation.mCity.getRegion().getName();
+    private String department = QuizzGeolocalisation.mCity.getDepartment().getName();
 
     private Integer population = Integer.parseInt(QuizzGeolocalisation.mCity.getPopulation());
 
@@ -22,25 +20,11 @@ public class QuestionLibrary {
             "Combien d'habitants y vivent ?"
     };
 
-    private String departments [] = {
-            "Ain",
-            "Aisne",
-            "Allier",
-            "Alpes-de-Haute-Provence",
-            "Hautes-alpes",
-            "Alpes-maritimes"
-    };
-
-    private String regions [] = {
-            "Auvergne Rhone Alpes",
-            "PACA",
-            "Grand Est"
-    };
 
     private Object mChoices [][] = {
-            {this.regions[r.nextInt(this.regions.length)], this.regions[r.nextInt(this.regions.length)], this.regions[r.nextInt(this.regions.length)],region},
-            {this.departments[r.nextInt(this.departments.length)], department, this.departments[r.nextInt(this.departments.length)], this.departments[r.nextInt(this.departments.length)]},
-            {r.nextInt(90-10), r.nextInt(90-10), QuizzGeolocalisation.mCity.getCodeDepartment() , r.nextInt(90-10)},
+            {MainActivity.mRegionsData.get(r.nextInt(MainActivity.mRegionsData.size())).getName(), MainActivity.mRegionsData.get(r.nextInt(MainActivity.mRegionsData.size())).getName(), MainActivity.mRegionsData.get(r.nextInt(MainActivity.mRegionsData.size())).getName(),region},
+            {MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName(), department, MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName(), MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName()},
+            {MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode(), MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode(), QuizzGeolocalisation.mCity.getCodeDepartment() , MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode()},
             { QuizzGeolocalisation.mCity.getSurface()+" km²",  QuizzGeolocalisation.mCity.getSurface()-10+" km²", QuizzGeolocalisation.mCity.getSurface()-10+" km²", QuizzGeolocalisation.mCity.getSurface()-10+" km²" },
             {population-5000, population-5000, population-5000, QuizzGeolocalisation.mCity.getPopulation()}
     };
