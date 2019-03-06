@@ -26,7 +26,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/cornerRadius"
+        android:background="@drawable/corner_radius"
         android:text="SCORES"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -75,7 +75,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:padding="16dp"
-        android:background="@drawable/cornerRadius"
+        android:background="@drawable/corner_radius"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -88,7 +88,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@drawable/cornerRadius"
+            android:background="@drawable/corner_radius"
             android:weightSum="10">
 
             <TextView
@@ -122,7 +122,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/cornerRadius"
+        android:background="@drawable/corner_radius"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

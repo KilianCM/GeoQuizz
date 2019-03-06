@@ -46,8 +46,6 @@ public class NetworkUtils {
             //URL requestURL = new URL(builtURI.toString());
             URL requestURL = new URL(URLDecoder.decode(builtURI.toString(), "UTF-8"));
 
-            Log.d(LOG_TAG,requestURL.toString());
-
             urlConnection = (HttpURLConnection) requestURL.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -92,7 +90,6 @@ public class NetworkUtils {
                 }
             }
         }
-        Log.d(LOG_TAG,cityJSONString);
         return cityJSONString;
     }
 
