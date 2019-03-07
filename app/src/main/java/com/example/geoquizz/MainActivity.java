@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void displayScore(View view) {
-        /*Intent intent = new Intent(this, QuizzGeolocalisation.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(this, ScoreActivity.class);
+        startActivity(intent);
     }
 
     public void callApiForDepartments(){
@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // Get the JSONArray of city items.
                 //JSONArray itemsArray = jsonObject.getJSONArray("items");
                 JSONArray itemsArray = new JSONArray(data);
-                Log.d(LOG_TAG, itemsArray.toString());
 
                 // Initialize iterator and results fields.
                 int i = 0;
@@ -183,7 +182,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 // Get the JSONArray of city items.
                 //JSONArray itemsArray = jsonObject.getJSONArray("items");
                 JSONArray itemsArray = new JSONArray(data);
-                Log.d(LOG_TAG, itemsArray.toString());
 
                 // Initialize iterator and results fields.
                 int i = 0;

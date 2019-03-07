@@ -8,12 +8,12 @@ public class City {
     private String name;
     private String code;
     private ArrayList<String> codes;
-    private Double surface;
+    private Long surface;
     private String population;
     private Department department;
     private Region region;
 
-    public City(String name, String code, ArrayList<String> codes, Double surface, String population, Department department, Region region) {
+    public City(String name, String code, ArrayList<String> codes, Long surface, String population, Department department, Region region) {
         this.name = name;
         this.code = code;
         this.codes = codes;
@@ -37,7 +37,7 @@ public class City {
         return codes;
     }
 
-    public Double getSurface() {
+    public Long getSurface() {
         return surface;
     }
 
@@ -71,7 +71,7 @@ public class City {
         this.codes = codes;
     }
 
-    public void setSurface(Double surface) {
+    public void setSurface(Long surface) {
         this.surface = surface;
     }
 

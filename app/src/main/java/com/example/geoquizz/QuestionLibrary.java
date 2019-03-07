@@ -26,7 +26,7 @@ public class QuestionLibrary {
             {MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName(), department, MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName(), MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName()},
             {MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode(), MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode(), QuizzGeolocalisation.mCity.getCodeDepartment() , MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode()},
             { QuizzGeolocalisation.mCity.getSurface()+" km²",  QuizzGeolocalisation.mCity.getSurface()-10+" km²", QuizzGeolocalisation.mCity.getSurface()-10+" km²", QuizzGeolocalisation.mCity.getSurface()-10+" km²" },
-            {population-5000, population-5000, population-5000, QuizzGeolocalisation.mCity.getPopulation()}
+            {r.nextInt((population+population/10)-(population-population/10))+(population-population/10), r.nextInt((population+population/10)-(population-population/10))+(population-population/10), r.nextInt((population+population/10)-(population-population/10))+(population-population/10), QuizzGeolocalisation.mCity.getPopulation()}
     };
 
 

@@ -3,6 +3,7 @@ package com.example.geoquizz;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -18,21 +19,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +36,6 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
     private TextView mNameText;
     static public City mCity = new City();
-
 
     private static final String LOG_TAG =
             QuizzGeolocalisation.class.getSimpleName();
@@ -55,6 +48,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
     private Button mButtonChoice2;
     private Button mButtonChoice3;
     private Button mButtonChoice4;
+    private ProgressBar mProgessBar;
 
     private String mAnswer;
     private int mScore = 0;
@@ -79,6 +73,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
         //mTitleText = findViewById(R.id.titleText);
         mNameText = findViewById(R.id.text_city);
+        mProgessBar = (ProgressBar)findViewById(R.id.pBar);
 
         if (getSupportLoaderManager().getLoader(0) != null) {
             getSupportLoaderManager().initLoader(0, null, this);
@@ -92,7 +87,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
         private void launchQuizz(){
 
-            /*mScoreView = (TextView) findViewById(R.id.score);*/
+            mProgessBar.setVisibility(View.GONE);
+            mScoreView = (TextView) findViewById(R.id.score);
+            mScoreView.setText("" + mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
             mQuestionView = (TextView) findViewById(R.id.text_question);
             mButtonChoice1 = (Button) findViewById(R.id.button_answer1);
             mButtonChoice2 = (Button) findViewById(R.id.button_answer2);
@@ -108,14 +105,14 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     //My logic for Button goes in here
 
                     if (mButtonChoice1.getText() == mAnswer) {
-                    /*mScore = mScore + 1;
-                    updateScore(mScore);*/
+                        mScore = mScore + 1;
+                        updateScore(mScore);
                         updateQuestion();
                         //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "correct", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
                         updateQuestion();
                     }
                 }
@@ -130,14 +127,14 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     //My logic for Button goes in here
 
                     if (mButtonChoice2.getText() == mAnswer) {
-                    /*mScore = mScore + 1;
-                    /*updateScore(mScore);*/
+                        mScore = mScore + 1;
+                        updateScore(mScore);
                         updateQuestion();
                         //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "correct", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
                         updateQuestion();
                     }
                 }
@@ -153,14 +150,14 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     //My logic for Button goes in here
 
                     if (mButtonChoice3.getText() == mAnswer) {
-                    /*mScore = mScore + 1;
-                    updateScore(mScore);*/
+                        mScore = mScore + 1;
+                        updateScore(mScore);
                         updateQuestion();
                         //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "correct", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
                         updateQuestion();
                     }
                 }
@@ -176,14 +173,14 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     //My logic for Button goes in here
 
                     if (mButtonChoice4.getText() == mAnswer) {
-                    /*mScore = mScore + 1;
-                    updateScore(mScore);*/
+                        mScore = mScore + 1;
+                        updateScore(mScore);
                         updateQuestion();
                         //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "correct", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
                         updateQuestion();
                     }
                 }
@@ -194,21 +191,29 @@ public class QuizzGeolocalisation extends AppCompatActivity
         }
 
         private void updateQuestion(){
-            Log.d(LOG_TAG,"rep : " + mQuestionLibrary.mCorrectAnswers[mQuestionNumber]);
-            mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
-            mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber).toString());
-            mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber).toString());
-            mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber).toString());
-            mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber).toString());
 
-            mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber).toString();
-            mQuestionNumber++;
+            if(mQuestionNumber < mQuestionLibrary.mCorrectAnswers.length){
+                mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
+                mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber).toString());
+                mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber).toString());
+                mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber).toString());
+                mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber).toString());
+
+                mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber).toString();
+                mQuestionNumber++;
+            }
+            else{
+                //lancement page fin du quizz (pour l'instant, accueil)
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+
         }
 
 
-    /*private void updateScore(int point) {
-        mScoreView.setText("" + mScore);
-    }*/
+    private void updateScore(int point) {
+        mScoreView.setText("" + point + "/" + mQuestionLibrary.mCorrectAnswers.length);
+    }
 
 
     public void callApi(Double latitude, Double longitude){
@@ -228,6 +233,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
             Bundle queryBundle = new Bundle();
             queryBundle.putDouble("longitude", mLongitude);
             queryBundle.putDouble("latitude", mLatitude);
+            Log.d(LOG_TAG,"LAT : " + mLatitude + " - LON : " + mLongitude);
             getSupportLoaderManager().restartLoader(0, queryBundle, this);
 
         }
@@ -285,14 +291,12 @@ public class QuizzGeolocalisation extends AppCompatActivity
                     name = city.getString("nom");
                     mCity.setName(city.getString("nom"));
                     mCity.setCode(city.getString("code"));
-                    mCity.setSurface(city.getDouble("surface")/100);
+                    mCity.setSurface(Math.round(city.getDouble("surface")));
                     mCity.setPopulation(city.getString("population"));
                     mCity.setRegion(new Region(city.getJSONObject("region").getString("nom"),city.getJSONObject("region").getString("code")));
                     mCity.setDepartment(new Department(city.getJSONObject("departement").getString("nom"),city.getJSONObject("departement").getString("code")));
                     this.mQuestionLibrary = new QuestionLibrary();
                     this.launchQuizz();
-
-                    //TO DO : arrondir la valeur de la surface
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -307,13 +311,13 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 mNameText.setText(name);
             } else {
                 // If none are found, update the UI to show failed results.
-                mNameText.setText("rien");
+                mNameText.setText("Ville introuvable");
             }
 
         } catch (Exception e) {
             // If onPostExecute does not receive a proper JSON string,
             // update the UI to show failed results.
-            mNameText.setText("error");
+            mNameText.setText("Erreur");
             e.printStackTrace();
         }
 
