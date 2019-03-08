@@ -27,7 +27,11 @@
         </activity>
         <activity
             android:name=".ScoreActivity"
-            android:label="Quizz" >
+            android:label="Score" >
+        </activity>
+        <activity
+            android:name=".EndQuizzGeolocalisation"
+            android:label="EndQuizz" >
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

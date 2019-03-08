@@ -103,8 +103,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     //My logic for Button goes in here
-
-                    if (mButtonChoice1.getText() == mAnswer) {
+                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice1.getText());
+                    Log.d(LOG_TAG,"Test : " + (mButtonChoice1.getText() == mAnswer));
+                    if (mButtonChoice1.getText() == mAnswer.toString()) {
                         mScore = mScore + 1;
                         updateScore(mScore);
                         updateQuestion();
@@ -125,8 +126,11 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     //My logic for Button goes in here
+                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice2.getText());
+                    Log.d(LOG_TAG,"Test : " + (mButtonChoice2.getText() == mAnswer));
 
-                    if (mButtonChoice2.getText() == mAnswer) {
+                    if (mButtonChoice2.getText() == mAnswer.toString()) {
+
                         mScore = mScore + 1;
                         updateScore(mScore);
                         updateQuestion();
@@ -148,8 +152,11 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     //My logic for Button goes in here
+                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice3.getText());
+                    Log.d(LOG_TAG,"Test : " + (mButtonChoice3.getText() == mAnswer));
 
-                    if (mButtonChoice3.getText() == mAnswer) {
+                    if (mButtonChoice3.getText() == mAnswer.toString()) {
+
                         mScore = mScore + 1;
                         updateScore(mScore);
                         updateQuestion();
@@ -171,8 +178,10 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 @Override
                 public void onClick(View view) {
                     //My logic for Button goes in here
+                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice4.getText());
+                    Log.d(LOG_TAG,"Test : " + (mButtonChoice4.getText() == mAnswer));
 
-                    if (mButtonChoice4.getText() == mAnswer) {
+                    if (mButtonChoice4.getText() == mAnswer.toString()) {
                         mScore = mScore + 1;
                         updateScore(mScore);
                         updateQuestion();
@@ -200,11 +209,15 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber).toString());
 
                 mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber).toString();
+                Log.d(LOG_TAG, mAnswer);
                 mQuestionNumber++;
             }
             else{
-                //lancement page fin du quizz (pour l'instant, accueil)
-                Intent intent = new Intent(this, MainActivity.class);
+                //lancement page fin du quizz
+                Intent intent = new Intent(this, EndQuizzGeolocalisation.class);
+                intent.putExtra("CITY_NAME",mCity.getName());
+                intent.putExtra("SCORE_TEXT", mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
+                intent.putExtra("SCORE_VALUE", mScore);
                 startActivity(intent);
             }
 

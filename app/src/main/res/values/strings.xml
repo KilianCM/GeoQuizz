@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GeoQuizz</string>
+    <string name="return_home">Retourner à l\'accueil</string>
+    <string name="see_scores">Voir mes scores</string>
 </resources>
