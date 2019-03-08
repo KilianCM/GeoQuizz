@@ -61,6 +61,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 displayScore(view);
             }
         });
+
+        final Button buttonSearch = (Button) findViewById(R.id.button_search_text);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                displayMap(view);
+            }
+        });
     }
 
     public void launchQuizz(View view) {
@@ -70,6 +77,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void displayScore(View view) {
         Intent intent = new Intent(this, ScoreActivity.class);
+        startActivity(intent);
+    }
+
+    public void displayMap(View view) {
+        Intent intent = new Intent(this, CitySelection.class);
         startActivity(intent);
     }
 
