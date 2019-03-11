@@ -67,6 +67,8 @@ public class QuizzGeolocalisation extends AppCompatActivity
     private Double mLongitude;
     private Double mLatitude;
 
+    private int mQuizzType = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +81,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
         //set background gradient according to the quizz type (geolocalisation or not)
         if(extras != null) {
+            mQuizzType = extras.getInt("QUIZZ_TYPE");
             if (extras.getInt("QUIZZ_TYPE") == 0) {
                 mBackground.setImageResource(R.drawable.gradient_bg_red);
                 if (getSupportLoaderManager().getLoader(0) != null) {
@@ -232,6 +235,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
             intent.putExtra("CITY_NAME",mCity.getName());
             intent.putExtra("SCORE_TEXT", mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
             intent.putExtra("SCORE_VALUE", mScore);
+            intent.putExtra("QUIZZ_TYPE",mQuizzType);
             startActivity(intent);
         }
 
