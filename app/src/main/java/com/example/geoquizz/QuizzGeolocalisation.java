@@ -81,161 +81,161 @@ public class QuizzGeolocalisation extends AppCompatActivity
         if(extras != null) {
             if (extras.getInt("QUIZZ_TYPE") == 0) {
                 mBackground.setImageResource(R.drawable.gradient_bg_red);
+                if (getSupportLoaderManager().getLoader(0) != null) {
+                    getSupportLoaderManager().initLoader(0, null, this);
+                }
+
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                this.getLocationPermission();
+                this.getDeviceLocation();
             } else {
                 mBackground.setImageResource(R.drawable.gradient_bg_green);
+                Log.d(LOG_TAG, "lon " + extras.getDouble("LON"));
+
+                callApi(extras.getDouble("LAT"), extras.getDouble("LON"));
 
             }
         }
 
         //mTitleText = findViewById(R.id.titleText);
         mNameText = findViewById(R.id.text_city);
+    }
 
-        if (getSupportLoaderManager().getLoader(0) != null) {
-            getSupportLoaderManager().initLoader(0, null, this);
-        }
+    private void launchQuizz(){
+        mScoreView = (TextView) findViewById(R.id.score);
+        mScoreView.setText("" + mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
+        mQuestionView = (TextView) findViewById(R.id.text_question);
+        mButtonChoice1 = (Button) findViewById(R.id.button_answer1);
+        mButtonChoice2 = (Button) findViewById(R.id.button_answer2);
+        mButtonChoice3 = (Button) findViewById(R.id.button_answer3);
+        mButtonChoice4 = (Button) findViewById(R.id.button_answer4);
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        this.getLocationPermission();
-        this.getDeviceLocation();
+        updateQuestion();
+
+        //Start of Button Listener for Button1
+        mButtonChoice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //My logic for Button goes in here
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice1.getText());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice1.getText() == mAnswer));
+                if (mButtonChoice1.getText() == mAnswer.toString()) {
+                    mScore = mScore + 1;
+                    updateScore(mScore);
+                    updateQuestion();
+                    //This line of code is optiona
+                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    updateQuestion();
+                }
+            }
+        });
+
+        //End of Button Listener for Button1
+
+        //Start of Button Listener for Button2
+        mButtonChoice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //My logic for Button goes in here
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice2.getText());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice2.getText() == mAnswer));
+
+                if (mButtonChoice2.getText() == mAnswer.toString()) {
+
+                    mScore = mScore + 1;
+                    updateScore(mScore);
+                    updateQuestion();
+                    //This line of code is optiona
+                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    updateQuestion();
+                }
+            }
+        });
+
+        //End of Button Listener for Button2
+
+
+        //Start of Button Listener for Button3
+        mButtonChoice3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //My logic for Button goes in here
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice3.getText());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice3.getText() == mAnswer));
+
+                if (mButtonChoice3.getText() == mAnswer.toString()) {
+
+                    mScore = mScore + 1;
+                    updateScore(mScore);
+                    updateQuestion();
+                    //This line of code is optiona
+                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    updateQuestion();
+                }
+            }
+        });
+
+        //End of Button Listener for Button3
+
+
+        //Start of Button Listener for Button4
+        mButtonChoice4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //My logic for Button goes in here
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice4.getText());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice4.getText() == mAnswer));
+
+                if (mButtonChoice4.getText() == mAnswer.toString()) {
+                    mScore = mScore + 1;
+                    updateScore(mScore);
+                    updateQuestion();
+                    //This line of code is optiona
+                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    updateQuestion();
+                }
+            }
+        });
+
+        //End of Button Listener for Button4
 
     }
 
-        private void launchQuizz(){
+    private void updateQuestion(){
 
-            mScoreView = (TextView) findViewById(R.id.score);
-            mScoreView.setText("" + mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
-            mQuestionView = (TextView) findViewById(R.id.text_question);
-            mButtonChoice1 = (Button) findViewById(R.id.button_answer1);
-            mButtonChoice2 = (Button) findViewById(R.id.button_answer2);
-            mButtonChoice3 = (Button) findViewById(R.id.button_answer3);
-            mButtonChoice4 = (Button) findViewById(R.id.button_answer4);
+        if(mQuestionNumber < mQuestionLibrary.mCorrectAnswers.length){
+            mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
+            mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber).toString());
+            mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber).toString());
+            mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber).toString());
+            mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber).toString());
 
-            updateQuestion();
-
-            //Start of Button Listener for Button1
-            mButtonChoice1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //My logic for Button goes in here
-                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice1.getText());
-                    Log.d(LOG_TAG,"Test : " + (mButtonChoice1.getText() == mAnswer));
-                    if (mButtonChoice1.getText() == mAnswer.toString()) {
-                        mScore = mScore + 1;
-                        updateScore(mScore);
-                        updateQuestion();
-                        //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
-                        updateQuestion();
-                    }
-                }
-            });
-
-            //End of Button Listener for Button1
-
-            //Start of Button Listener for Button2
-            mButtonChoice2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //My logic for Button goes in here
-                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice2.getText());
-                    Log.d(LOG_TAG,"Test : " + (mButtonChoice2.getText() == mAnswer));
-
-                    if (mButtonChoice2.getText() == mAnswer.toString()) {
-
-                        mScore = mScore + 1;
-                        updateScore(mScore);
-                        updateQuestion();
-                        //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
-                        updateQuestion();
-                    }
-                }
-            });
-
-            //End of Button Listener for Button2
-
-
-            //Start of Button Listener for Button3
-            mButtonChoice3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //My logic for Button goes in here
-                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice3.getText());
-                    Log.d(LOG_TAG,"Test : " + (mButtonChoice3.getText() == mAnswer));
-
-                    if (mButtonChoice3.getText() == mAnswer.toString()) {
-
-                        mScore = mScore + 1;
-                        updateScore(mScore);
-                        updateQuestion();
-                        //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
-                        updateQuestion();
-                    }
-                }
-            });
-
-            //End of Button Listener for Button3
-
-
-            //Start of Button Listener for Button4
-            mButtonChoice4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //My logic for Button goes in here
-                    Log.d(LOG_TAG,"Reponse : " + mButtonChoice4.getText());
-                    Log.d(LOG_TAG,"Test : " + (mButtonChoice4.getText() == mAnswer));
-
-                    if (mButtonChoice4.getText() == mAnswer.toString()) {
-                        mScore = mScore + 1;
-                        updateScore(mScore);
-                        updateQuestion();
-                        //This line of code is optiona
-                        Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
-                        updateQuestion();
-                    }
-                }
-            });
-
-            //End of Button Listener for Button4
-
+            mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber).toString();
+            Log.d(LOG_TAG, mAnswer);
+            mQuestionNumber++;
+        }
+        else{
+            //lancement page fin du quizz
+            Intent intent = new Intent(this, EndQuizzGeolocalisation.class);
+            intent.putExtra("CITY_NAME",mCity.getName());
+            intent.putExtra("SCORE_TEXT", mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
+            intent.putExtra("SCORE_VALUE", mScore);
+            startActivity(intent);
         }
 
-        private void updateQuestion(){
-
-            if(mQuestionNumber < mQuestionLibrary.mCorrectAnswers.length){
-                mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
-                mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber).toString());
-                mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber).toString());
-                mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber).toString());
-                mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber).toString());
-
-                mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber).toString();
-                Log.d(LOG_TAG, mAnswer);
-                mQuestionNumber++;
-            }
-            else{
-                //lancement page fin du quizz
-                Intent intent = new Intent(this, EndQuizzGeolocalisation.class);
-                intent.putExtra("CITY_NAME",mCity.getName());
-                intent.putExtra("SCORE_TEXT", mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
-                intent.putExtra("SCORE_VALUE", mScore);
-                startActivity(intent);
-            }
-
-        }
+    }
 
 
     private void updateScore(int point) {
@@ -258,9 +258,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 && latitude != null && longitude != null) {
 
             Bundle queryBundle = new Bundle();
-            queryBundle.putDouble("longitude", mLongitude);
-            queryBundle.putDouble("latitude", mLatitude);
-            Log.d(LOG_TAG,"LAT : " + mLatitude + " - LON : " + mLongitude);
+            queryBundle.putDouble("longitude", longitude);
+            queryBundle.putDouble("latitude", latitude);
+            Log.d(LOG_TAG,"LAT : " + latitude + " - LON : " + longitude);
             getSupportLoaderManager().restartLoader(0, queryBundle, this);
 
         }
