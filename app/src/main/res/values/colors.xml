@@ -8,5 +8,6 @@
     <color name="colorRed">#FF3838</color>
     <color name="colorRedAttenuate">#FF6A38</color>
     <color name="colorGreen">#27AE60</color>
+    <color name="colorGreenAttenuate">#1DD96C</color>
     <color name="white">#FFFFFF</color>
 </resources>

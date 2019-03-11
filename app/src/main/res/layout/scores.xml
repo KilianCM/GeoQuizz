@@ -96,10 +96,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
-                android:text="Ville"
                 android:paddingLeft="8dp"
+                android:text="Ville"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
@@ -107,7 +108,8 @@
                 android:layout_weight="2"
                 android:text="Score"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -115,19 +117,22 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/score_list"
-        android:layout_width="379dp"
-        android:layout_height="566dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_below="@id/title"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/corner_radius"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:listitem="@layout/recyclerview_item"
-        >
+        tools:listitem="@layout/recyclerview_item">
 
     </android.support.v7.widget.RecyclerView>
 

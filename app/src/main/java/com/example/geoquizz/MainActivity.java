@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void launchQuizz(View view) {
         Intent intent = new Intent(this, QuizzGeolocalisation.class);
+        intent.putExtra("QUIZZ_TYPE",0);
         startActivity(intent);
     }
 

@@ -26,7 +26,9 @@ public class ScoreListAdapter extends RecyclerView.Adapter<ScoreListAdapter.Scor
     public void onBindViewHolder(ScoreViewHolder holder, int position) {
         if (mScores != null) {
             Score current = mScores.get(position);
-            holder.scoreItemView.setText(current.getCity());
+            holder.scoreItemView.setText(current.getValue() + "/5");
+            holder.cityItemView.setText(current.getCity());
+
         } else {
             // Covers the case of data not being ready yet.
             holder.scoreItemView.setText("No city");
@@ -48,11 +50,15 @@ public class ScoreListAdapter extends RecyclerView.Adapter<ScoreListAdapter.Scor
     }
 
     class ScoreViewHolder extends RecyclerView.ViewHolder {
+        private final TextView cityItemView;
         private final TextView scoreItemView;
+
 
         private ScoreViewHolder(View itemView) {
             super(itemView);
-            scoreItemView = itemView.findViewById(R.id.textView);
+            scoreItemView = itemView.findViewById(R.id.textViewScore);
+            cityItemView = itemView.findViewById(R.id.textView);
+
         }
     }
 }

@@ -49,6 +49,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
     private Button mButtonChoice3;
     private Button mButtonChoice4;
     private ProgressBar mProgessBar;
+    private ImageView mBackground;
 
     private String mAnswer;
     private int mScore = 0;
@@ -70,6 +71,21 @@ public class QuizzGeolocalisation extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quizz_geolocalisation);
+
+        mBackground = findViewById(R.id.imageView);
+
+
+        Bundle extras = getIntent().getExtras();
+
+        //set background gradient according to the quizz type (geolocalisation or not)
+        if(extras != null) {
+            if (extras.getInt("QUIZZ_TYPE") == 0) {
+                mBackground.setImageResource(R.drawable.gradient_bg_red);
+            } else {
+                mBackground.setImageResource(R.drawable.gradient_bg_green);
+
+            }
+        }
 
         //mTitleText = findViewById(R.id.titleText);
         mNameText = findViewById(R.id.text_city);
@@ -325,6 +341,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
             } else {
                 // If none are found, update the UI to show failed results.
                 mNameText.setText("Ville introuvable");
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(QuizzGeolocalisation.this, "Une erreur est survenue. Votre position est introuvable.", Toast.LENGTH_SHORT).show();
             }
 
         } catch (Exception e) {
@@ -332,6 +351,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
             // update the UI to show failed results.
             mNameText.setText("Erreur");
             e.printStackTrace();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(QuizzGeolocalisation.this, "Une erreur est survenue. Veuillez vérifier votre connexion à internet.", Toast.LENGTH_SHORT).show();
         }
 
     }
