@@ -89,7 +89,6 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
         //mTitleText = findViewById(R.id.titleText);
         mNameText = findViewById(R.id.text_city);
-        mProgessBar = (ProgressBar)findViewById(R.id.pBar);
 
         if (getSupportLoaderManager().getLoader(0) != null) {
             getSupportLoaderManager().initLoader(0, null, this);
@@ -103,7 +102,6 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
         private void launchQuizz(){
 
-            mProgessBar.setVisibility(View.GONE);
             mScoreView = (TextView) findViewById(R.id.score);
             mScoreView.setText("" + mScore + "/" + mQuestionLibrary.mCorrectAnswers.length);
             mQuestionView = (TextView) findViewById(R.id.text_question);
