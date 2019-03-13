@@ -66,50 +66,65 @@
 
     <Button
         android:id="@+id/button_answer1"
-        android:layout_width="169dp"
-        android:layout_height="95dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/corner_radius"
         android:singleLine="true"
         android:text="Reponse 1"
         app:layout_constraintBottom_toTopOf="@+id/button_answer3"
+        app:layout_constraintEnd_toStartOf="@+id/button_answer2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score" />
 
     <Button
         android:id="@+id/button_answer3"
-        android:layout_width="169dp"
-        android:layout_height="95dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/corner_radius"
-        android:text="Reponse 3"
         android:singleLine="true"
+        android:text="Reponse 3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/button_answer4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_answer1" />
 
     <Button
         android:id="@+id/button_answer4"
-        android:layout_width="169dp"
-        android:layout_height="95dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/corner_radius"
-        android:text="Reponse 4"
         android:singleLine="true"
+        android:text="Reponse 4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_answer3"
+        app:layout_constraintTop_toBottomOf="@+id/button_answer2" />
 
     <Button
         android:id="@+id/button_answer2"
-        android:layout_width="169dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
@@ -118,6 +133,7 @@
         android:text="Reponse 2"
         app:layout_constraintBottom_toTopOf="@+id/button_answer4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_answer1"
         app:layout_constraintTop_toBottomOf="@+id/score" />
 
     <TextView
