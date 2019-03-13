@@ -375,6 +375,12 @@ public class QuizzGeolocalisation extends AppCompatActivity
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mLocationPermissionGranted = true;
+                    this.getDeviceLocation();
+                }
+                else{
+                    Toast.makeText(QuizzGeolocalisation.this, "Impossible de lancer le quizz sans autorisation de localisation ! :(", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this,MainActivity.class);
+                    startActivity(intent);
                 }
             }
         }
@@ -419,6 +425,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
                         }
                     }
                 });
+
             }
         } catch (SecurityException e){
             Log.e("TAG", e.getMessage());
