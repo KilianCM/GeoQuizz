@@ -10,9 +10,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="8"
-        android:text="Ville"
+        android:text="@string/city"
         android:paddingLeft="8dp"
         android:textColor="@android:color/black"
+        android:paddingBottom="8dp"
         android:textSize="24sp" />
 
     <TextView
@@ -20,8 +21,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="Score"
+        android:text="@string/score_label_recycler"
         android:textColor="@android:color/black"
+        android:paddingBottom="8dp"
         android:textSize="24sp" />
 
 </LinearLayout>

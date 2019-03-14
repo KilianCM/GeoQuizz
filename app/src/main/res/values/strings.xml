@@ -2,4 +2,9 @@
     <string name="app_name">GeoQuizz</string>
     <string name="return_home">Retourner à l\'accueil</string>
     <string name="see_scores">Voir mes scores</string>
+    <string name="launch_quizz">LANCER LE QUIZZ</string>
+    <string name="browse_locations">PARCOURIR</string>
+    <string name="scores_menu">SCORES</string>
+    <string name="city">Ville</string>
+    <string name="score_label_recycler">Score</string>
 </resources>

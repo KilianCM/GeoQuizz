@@ -68,7 +68,7 @@ public class CitySelection extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quizz_map);
 
-        Places.initialize(getApplicationContext(),"AIzaSyBbhyOtBVMLFygOo8gDMwaMgDIqGaQlrzU");
+        Places.initialize(getApplicationContext(), getApplicationContext().getString(R.string.google_maps_key));
         PlacesClient placesClient = Places.createClient(this);
 
         placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete);

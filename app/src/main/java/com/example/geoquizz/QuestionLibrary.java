@@ -39,7 +39,7 @@ public class QuestionLibrary {
 
 
 
-    public Object mCorrectAnswers[] = {region, department, QuizzGeolocalisation.mCity.getCodeDepartment(), QuizzGeolocalisation.mCity.getSurface()+" km²", QuizzGeolocalisation.mCity.getPopulation()};
+    public Object mCorrectAnswers[] = {region, department, QuizzGeolocalisation.mCity.getCodeDepartment(), QuizzGeolocalisation.mCity.getSurface().intValue()+" km²", QuizzGeolocalisation.mCity.getPopulation()};
 
     public QuestionLibrary(){
 
@@ -53,7 +53,7 @@ public class QuestionLibrary {
             mChoices[2][i] = MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode();
         }
         for(int i = 0; i<4; i++){
-            mChoices[3][i] = QuizzGeolocalisation.mCity.getSurface();
+            mChoices[3][i] = r.nextInt((QuizzGeolocalisation.mCity.getSurface().intValue()+(QuizzGeolocalisation.mCity.getSurface().intValue()/5))-(QuizzGeolocalisation.mCity.getSurface().intValue()-(QuizzGeolocalisation.mCity.getSurface().intValue()/5)))+(QuizzGeolocalisation.mCity.getSurface().intValue()-(QuizzGeolocalisation.mCity.getSurface().intValue()/5)) + " km²";
         }
         for(int i = 0; i<4; i++){
             mChoices[4][i] = r.nextInt((population+population/10)-(population-population/10))+(population-population/10);
@@ -62,7 +62,7 @@ public class QuestionLibrary {
         mChoices[0][r.nextInt(4-1)+1] = region;
         mChoices[1][r.nextInt(4-1)+1] = department;
         mChoices[2][r.nextInt(4-1)+1] = QuizzGeolocalisation.mCity.getCodeDepartment();
-        mChoices[3][r.nextInt(4-1)+1] = QuizzGeolocalisation.mCity.getSurface()+" km²";
+        mChoices[3][r.nextInt(4-1)+1] = QuizzGeolocalisation.mCity.getSurface().intValue() + " km²";
         mChoices[4][r.nextInt(4-1)+1] = population;
 
     }
