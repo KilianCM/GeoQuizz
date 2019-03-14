@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private int loader2 = 2;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +44,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mDepartmentsData = new ArrayList<>();
         mRegionsData = new ArrayList<>();
 
-
         callApiForDepartments();
         callApiForRegions();
-
 
         final Button buttonPlay = (Button) findViewById(R.id.button_play_text);
         buttonPlay.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +67,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 displayMap(view);
             }
         });
-    }
+
+        int gridColumnCount =
+                getResources().getInteger(R.integer.grid_column_count);
+        }
 
     public void launchQuizz(View view) {
         Intent intent = new Intent(this, QuizzGeolocalisation.class);
