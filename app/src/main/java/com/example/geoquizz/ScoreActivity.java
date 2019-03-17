@@ -8,7 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -36,6 +39,33 @@ public class ScoreActivity extends AppCompatActivity {
                 adapter.setScores(scores);
             }
         });
+
+
+        // Add the functionality to swipe items in the
+        // recycler view to delete that item
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Score myScore = adapter.getScoreAtPosition(position);
+                        Toast.makeText(ScoreActivity.this, "Suppression du score", Toast.LENGTH_LONG).show();
+
+                        // Delete the word
+                        mScoreViewModel.deleteScore(myScore);
+                    }
+                });
+
+        helper.attachToRecyclerView(recyclerView);
 
     }
 }

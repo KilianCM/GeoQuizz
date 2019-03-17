@@ -2,6 +2,7 @@ package com.example.geoquizz;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
@@ -18,4 +19,7 @@ public interface ScoreDao {
 
     @Query("SELECT * from score_table ORDER BY id DESC")
     LiveData<List<Score>> getAllScores();
+
+    @Delete
+    void deleteScore(Score word);
 }

@@ -21,4 +21,7 @@ public class ScoreViewModel extends AndroidViewModel {
     LiveData<List<Score>> getAllScores() { return mAllScores; }
 
     public void insert(Score score) { mRepository.insert(score); }
+
+    public void deleteScore(Score score) {mRepository.deleteScore(score);}
+
 }

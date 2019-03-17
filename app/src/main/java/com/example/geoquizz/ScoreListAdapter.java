@@ -49,6 +49,10 @@ public class ScoreListAdapter extends RecyclerView.Adapter<ScoreListAdapter.Scor
         else return 0;
     }
 
+    public Score getScoreAtPosition (int position) {
+        return mScores.get(position);
+    }
+
     class ScoreViewHolder extends RecyclerView.ViewHolder {
         private final TextView cityItemView;
         private final TextView scoreItemView;

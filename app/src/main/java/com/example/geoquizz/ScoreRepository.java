@@ -39,4 +39,22 @@ public class ScoreRepository {
             return null;
         }
     }
+
+    public void deleteScore(Score score)  {
+        new deleteScoreAsyncTask(mScoreDao).execute(score);
+    }
+
+    private static class deleteScoreAsyncTask extends AsyncTask<Score, Void, Void> {
+        private ScoreDao mAsyncTaskDao;
+
+        deleteScoreAsyncTask(ScoreDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Score... params) {
+            mAsyncTaskDao.deleteScore(params[0]);
+            return null;
+        }
+    }
 }
