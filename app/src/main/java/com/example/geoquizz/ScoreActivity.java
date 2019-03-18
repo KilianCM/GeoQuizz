@@ -58,7 +58,7 @@ public class ScoreActivity extends AppCompatActivity {
                                          int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Score myScore = adapter.getScoreAtPosition(position);
-                        Toast.makeText(ScoreActivity.this, "Suppression du score", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ScoreActivity.this, "Suppression du score", Toast.LENGTH_SHORT).show();
 
                         // Delete the word
                         mScoreViewModel.deleteScore(myScore);

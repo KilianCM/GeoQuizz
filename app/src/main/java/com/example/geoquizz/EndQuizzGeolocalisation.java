@@ -39,7 +39,18 @@ public class EndQuizzGeolocalisation extends AppCompatActivity {
             mCityName.setText("Erreur");
         } else {
             mCityName.setText(extras.getString("CITY_NAME"));
-            mScoreText.setText(extras.getString("SCORE_TEXT"));
+            String textEnqQuizz = "";
+            Integer score = extras.getInt("SCORE_VALUE");
+            if(score > 4){
+                textEnqQuizz = "Félicitations !";
+            }
+            else if(score > 2){
+                textEnqQuizz = "Pas mal !";
+            }
+            else{
+                textEnqQuizz = "Dommage !";
+            }
+            mScoreText.setText(textEnqQuizz + "\n" + extras.getString("SCORE_TEXT"));
 
             //set background gradient according to the quizz type (geolocalisation or not)
             if (extras.getInt("QUIZZ_TYPE") == 0) {

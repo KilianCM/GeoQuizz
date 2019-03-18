@@ -1,6 +1,7 @@
 package com.example.geoquizz;
 
 import org.json.JSONObject;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -46,12 +47,30 @@ public class QuestionLibrary {
         for(int i = 0; i<4; i++){
             mChoices[0][i] = MainActivity.mRegionsData.get(r.nextInt(MainActivity.mRegionsData.size())).getName();
         }
+
+        while(this.findDuplicates(mChoices[0]) != -1){
+            int j = this.findDuplicates(mChoices[0]);
+            mChoices[0][j] = MainActivity.mRegionsData.get(r.nextInt(MainActivity.mRegionsData.size())).getName();
+        }
+
         for(int i = 0; i<4; i++){
             mChoices[1][i] = MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName();
         }
+
+        while(this.findDuplicates(mChoices[1]) != -1){
+            int j = this.findDuplicates(mChoices[1]);
+            mChoices[1][j] = MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getName();
+        }
+
         for(int i = 0; i<4; i++){
             mChoices[2][i] = MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode();
         }
+
+        while(this.findDuplicates(mChoices[2]) != -1){
+            int j = this.findDuplicates(mChoices[2]);
+            mChoices[2][j] = MainActivity.mDepartmentsData.get(r.nextInt(MainActivity.mDepartmentsData.size())).getCode();
+        }
+
         for(int i = 0; i<4; i++){
             mChoices[3][i] = r.nextInt((QuizzGeolocalisation.mCity.getSurface().intValue()+(QuizzGeolocalisation.mCity.getSurface().intValue()/5))-(QuizzGeolocalisation.mCity.getSurface().intValue()-(QuizzGeolocalisation.mCity.getSurface().intValue()/5)))+(QuizzGeolocalisation.mCity.getSurface().intValue()-(QuizzGeolocalisation.mCity.getSurface().intValue()/5)) + " km²";
         }
@@ -67,6 +86,21 @@ public class QuestionLibrary {
 
     }
 
+    private int findDuplicates(Object[] inputArray)
+    {
+        int result = -1;
+        for (int i = 0; i < inputArray.length; i++)
+        {
+            for (int j = i+1; j < inputArray.length; j++)
+            {
+                if(inputArray[i] == inputArray[j])
+                {
+                    result = j;
+                }
+            }
+        }
+        return result;
+    }
 
 
     public String getQuestion(int a) {

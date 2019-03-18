@@ -1,12 +1,15 @@
 package com.example.geoquizz;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -68,9 +71,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        int gridColumnCount =
-                getResources().getInteger(R.integer.grid_column_count);
-        }
+        int gridColumnCount = getResources().getInteger(R.integer.grid_column_count);
+
+        final Context context = this;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Bienvenue sur GeoQuizz !")
+                        .setMessage("Cette app vous permet de répondre à un quizz sur les informations d'une commune.\n" +
+                                " 2 modes sont disponibles :\n " +
+                                "\t- Le mode géolocalisé avec un quizz sur la commune dans laquelle vous vous trouvez,\n" +
+                                "\t- Le mode recherche qui vous permet de lancer un quizz sur une commune précise.\n\n" +
+                                "Vos scores sont enregistrés, et vous pouvez les supprimer avec un slide gauche ou droit pour ne pas garder les preuves de votre niveau ;)")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setIcon(R.drawable.ic_info)
+                        .show();
+            }
+        });
+    }
 
     public void launchQuizz(View view) {
         Intent intent = new Intent(this, QuizzGeolocalisation.class);

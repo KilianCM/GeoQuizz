@@ -2,7 +2,9 @@ package com.example.geoquizz;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -133,21 +136,28 @@ public class QuizzGeolocalisation extends AppCompatActivity
         mNameText.setVisibility(View.VISIBLE);
         mProgessBar.setVisibility(View.GONE);
 
+        final Toast toastOK = Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT);
+        toastOK.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 5);
+
+
         //Start of Button Listener for Button1
         mButtonChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LOG_TAG,"Reponse : " + mButtonChoice1.getText() + " - Type : " + mButtonChoice1.getText().getClass());
-                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer + " - Type : " + mAnswer.getClass());
-                Log.d(LOG_TAG,"Test : " + (mButtonChoice1.getText() == mAnswer.toString()));
-                if (mButtonChoice1.getText() == mAnswer.toString()) {
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice1.getText() + " - Type : " + mButtonChoice1.getText().getClass() + " - Longueur : " + mButtonChoice1.getText().length());
+                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer.toString() + " - Type : " + mAnswer.getClass()  + " - Longueur : " + mAnswer.toString().length());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice1.getText().equals(mAnswer.toString())));
+                if (mButtonChoice1.getText().equals(mAnswer.toString())) {
+                    //bonne réponse
+                    toastOK.show();
                     mScore = mScore + 1;
                     updateScore(mScore);
                     updateQuestion();
-                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
-
                 } else {
-                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    //mauvaise réponse
+                    Toast toast = Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 5);
+                    toast.show();
                     updateQuestion();
                 }
             }
@@ -159,19 +169,20 @@ public class QuizzGeolocalisation extends AppCompatActivity
         mButtonChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LOG_TAG,"Reponse : " + mButtonChoice2.getText() + " - Type : " + mButtonChoice2.getText().getClass());
-                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer + " - Type : " + mAnswer.getClass());
-                Log.d(LOG_TAG,"Test : " + (mButtonChoice2.getText() == mAnswer.toString()));
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice2.getText() + " - Type : " + mButtonChoice2.getText().getClass() + " - Longueur : " + mButtonChoice2.getText().length());
+                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer.toString() + " - Type : " + mAnswer.getClass()  + " - Longueur : " + mAnswer.toString().length());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice2.getText().equals(mAnswer.toString())));
 
-                if (mButtonChoice2.getText() == mAnswer.toString()) {
-
+                if (mButtonChoice2.getText().equals(mAnswer.toString())) {
+                    toastOK.show();
                     mScore = mScore + 1;
                     updateScore(mScore);
                     updateQuestion();
-                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 5);
+                    toast.show();
                     updateQuestion();
                 }
             }
@@ -184,19 +195,20 @@ public class QuizzGeolocalisation extends AppCompatActivity
         mButtonChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LOG_TAG,"Reponse : " + mButtonChoice3.getText() + " - Type : " + mButtonChoice3.getText().getClass());
-                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer + " - Type : " + mAnswer.getClass());
-                Log.d(LOG_TAG,"Test : " + (mButtonChoice3.getText() == mAnswer.toString()));
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice3.getText() + " - Type : " + mButtonChoice3.getText().getClass() + " - Longueur : " + mButtonChoice3.getText().length());
+                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer.toString() + " - Type : " + mAnswer.getClass()  + " - Longueur : " + mAnswer.toString().length());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice3.getText().equals(mAnswer.toString())));
 
-                if (mButtonChoice3.getText() == mAnswer.toString()) {
-
+                if (mButtonChoice3.getText().equals(mAnswer.toString())) {
+                    toastOK.show();
                     mScore = mScore + 1;
-                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
                     updateScore(mScore);
                     updateQuestion();
 
                 } else {
-                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 5);
+                    toast.show();
                     updateQuestion();
                 }
             }
@@ -209,19 +221,20 @@ public class QuizzGeolocalisation extends AppCompatActivity
         mButtonChoice4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LOG_TAG,"Reponse : " + mButtonChoice4.getText() + " - Type : " + mButtonChoice4.getText().getClass());
-                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer + " - Type : " + mAnswer.getClass());
-                Log.d(LOG_TAG,"Test : " + (mButtonChoice4.getText() == mAnswer.toString()));
+                Log.d(LOG_TAG,"Reponse : " + mButtonChoice4.getText() + " - Type : " + mButtonChoice4.getText().getClass() + " - Longueur : " + mButtonChoice4.getText().length());
+                Log.d(LOG_TAG,"Reponse vraie : " + mAnswer.toString() + " - Type : " + mAnswer.getClass()  + " - Longueur : " + mAnswer.toString().length());
+                Log.d(LOG_TAG,"Test : " + (mButtonChoice4.getText().equals(mAnswer.toString())));
 
-                if (mButtonChoice4.getText() == mAnswer.toString()) {
-
+                if (mButtonChoice4.getText().equals(mAnswer.toString())) {
+                    toastOK.show();
                     mScore = mScore + 1;
                     updateScore(mScore);
                     updateQuestion();
-                    Toast.makeText(QuizzGeolocalisation.this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(QuizzGeolocalisation.this, "Mauvaise réponse, c'était " + mAnswer, Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 5);
+                    toast.show();
                     updateQuestion();
                 }
             }
@@ -242,6 +255,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
             mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
             mQuestionNumber++;
+            Log.d(LOG_TAG, "---- Question " + mQuestionNumber);
         }
         else{
             Intent intent = new Intent(this, EndQuizzGeolocalisation.class);
@@ -438,6 +452,28 @@ public class QuizzGeolocalisation extends AppCompatActivity
         } catch (SecurityException e){
             Log.e("TAG", e.getMessage());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Context context = this;
+        new AlertDialog.Builder(context)
+                .setTitle("Retour au menu")
+                .setMessage("Vous êtes sûr de vouloir quitter le quizz ?")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        startActivity(intent);                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 
 }
