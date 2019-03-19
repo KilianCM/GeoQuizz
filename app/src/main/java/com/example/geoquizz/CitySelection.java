@@ -129,6 +129,7 @@ public class CitySelection extends AppCompatActivity implements OnMapReadyCallba
 
     private void centerMapOnMyLocation() {
         try {
+            final Context context = this;
             //On Check toujours si on a le droit, sinon ca plante.
             if(mLocationPermissionGranted){
                 //On demande à notre service de localisation de trouver la position actuelle
@@ -143,18 +144,25 @@ public class CitySelection extends AppCompatActivity implements OnMapReadyCallba
                         if(task.isSuccessful()){
                             //Si oui on attribue la dernière localisation à notre variable pour la garder dans un coin.
                             mLastKnowLocation = (Location) task.getResult();
-                            LatLng coordinates = new LatLng(mLastKnowLocation.getLatitude(), mLastKnowLocation.getLongitude());
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13));
+                            if(mLastKnowLocation != null){
+                                LatLng coordinates = new LatLng(mLastKnowLocation.getLatitude(), mLastKnowLocation.getLongitude());
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 13));
 
-                            CameraPosition cameraPosition = new CameraPosition.Builder()
-                                    .target(coordinates)      // Sets the center of the map to location user
-                                    .zoom(10)                   // Sets the zoom
-                                    .build();                   // Creates a CameraPosition from the builder
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(coordinates)      // Sets the center of the map to location user
+                                        .zoom(10)                   // Sets the zoom
+                                        .build();                   // Creates a CameraPosition from the builder
+                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                            }
+                            else{
+                                Toast.makeText(CitySelection.this, "Impossible de centrer la carte sur votre position :(", Toast.LENGTH_SHORT).show();
+                            }
+
                         }else {
                             //Traitement du cas où on ne trouve pas de position.
                             Log.d("TAG", "Current location is null. Using defaults.");
                             Log.e("TAG", "Exception: %s", task.getException());
+                            Toast.makeText(CitySelection.this, "Impossible de centrer la carte sur votre position :(", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -162,6 +170,8 @@ public class CitySelection extends AppCompatActivity implements OnMapReadyCallba
             }
         } catch (SecurityException e){
             Log.e("TAG", e.getMessage());
+            Toast.makeText(CitySelection.this, "Impossible de centrer la carte sur votre position :(", Toast.LENGTH_SHORT).show();
+
         }
     }
 

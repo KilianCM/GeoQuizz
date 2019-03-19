@@ -423,6 +423,7 @@ public class QuizzGeolocalisation extends AppCompatActivity
 
     private void getDeviceLocation() {
         try {
+            final Context context = this;
             //On Check toujours si on a le droit, sinon ca plante.
             if(mLocationPermissionGranted){
                 //On demande à notre service de localisation de trouver la position actuelle
@@ -437,13 +438,23 @@ public class QuizzGeolocalisation extends AppCompatActivity
                         if(task.isSuccessful()){
                             //Si oui on attribue la dernière localisation à notre variable pour la garder dans un coin.
                             mLastKnowLocation = (Location) task.getResult();
-                            mLongitude = mLastKnowLocation.getLongitude();
-                            mLatitude = mLastKnowLocation.getLatitude();
-                            callApi(mLatitude, mLongitude);
+                            if(mLastKnowLocation != null){
+                                mLongitude = mLastKnowLocation.getLongitude();
+                                mLatitude = mLastKnowLocation.getLatitude();
+                                callApi(mLatitude, mLongitude);
+                            }
+                            else{
+                                Intent intent = new Intent(context, MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(QuizzGeolocalisation.this, "Une erreur est survenue. Votre position est introuvable.", Toast.LENGTH_SHORT).show();
+                            }
                         }else {
                             //Traitement du cas où on ne trouve pas de position.
                             Log.d("TAG", "Current location is null. Using defaults.");
                             Log.e("TAG", "Exception: %s", task.getException());
+                            Intent intent = new Intent(context, MainActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(QuizzGeolocalisation.this, "Une erreur est survenue. Votre position est introuvable.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -451,6 +462,9 @@ public class QuizzGeolocalisation extends AppCompatActivity
             }
         } catch (SecurityException e){
             Log.e("TAG", e.getMessage());
+            Toast.makeText(QuizzGeolocalisation.this, "Impossible de lancer le quizz sans autorisation de localisation ! :(", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
     }
 
